@@ -1,0 +1,865 @@
+/* =====================================================================
+   Problem 10: storefront design layer (loaded after index.css)
+   Fonts: Playfair Display (headings, collegiate publication feel),
+          Graduate (varsity labels), Inter (body, prices, UI).
+   ===================================================================== */
+:root {
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-varsity: 'Graduate', Georgia, serif;
+  --gold: #f2c230;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+.section-title,
+.page-head h1,
+.detail-info h1,
+.hero h1,
+.chat-results-head h2,
+.auth-card h1,
+.promo h2,
+.detail-price,
+.brand-text strong,
+.footer-brand,
+.chat-title strong,
+.category-tile {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  /* Playfair's default old-style figures make "$72.00" read like "$72.oo" */
+  font-variant-numeric: lining-nums;
+}
+
+.eyebrow {
+  font-family: var(--font-varsity);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+}
+
+.eyebrow.center {
+  text-align: center;
+}
+
+.section-title {
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  position: relative;
+  padding-bottom: 0.6rem;
+}
+
+/* varsity underline: Yale blue with a gold tip */
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 64px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--blue) 0 75%, var(--gold) 75% 100%);
+}
+
+.eyebrow.center + .section-title {
+  text-align: center;
+}
+
+.eyebrow.center + .section-title::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* ---------- Brand ---------- */
+.brand-mark {
+  width: 48px;
+  height: 48px;
+  background: var(--blue);
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.brand-text strong {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.01em;
+}
+
+.brand-text small {
+  font-family: var(--font-varsity);
+  font-size: 0.62rem;
+}
+
+.brand:hover .brand-mark svg {
+  animation: wiggle 0.6s ease-in-out;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+/* faint collegiate stripes */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.025) 0 18px, transparent 18px 36px);
+  pointer-events: none;
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+  padding: 4.5rem 1.5rem 5rem;
+  position: relative;
+}
+
+.hero h1 {
+  font-size: clamp(2.3rem, 5vw, 3.8rem);
+  line-height: 1.05;
+  animation: rise 0.7s var(--ease-out) both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: #9bc4ee;
+}
+
+.hero-copy {
+  animation: rise 0.7s 0.1s var(--ease-out) both;
+}
+
+.hero-actions {
+  animation: rise 0.7s 0.2s var(--ease-out) both;
+}
+
+.hero-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn.primary {
+  box-shadow: 0 6px 18px rgba(0, 54, 107, 0.35);
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.btn.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(0, 54, 107, 0.45);
+}
+
+.btn.ghost {
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hero-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 1.75rem 0 0;
+  color: #cfe0f3;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.hero-points li::before {
+  content: '✓ ';
+  color: var(--gold);
+}
+
+.hero-collage {
+  position: relative;
+  height: 430px;
+}
+
+.polaroid {
+  position: absolute;
+  width: 210px;
+  background: #fff;
+  color: var(--text);
+  padding: 10px 10px 12px;
+  border-radius: 6px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  text-decoration: none;
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.35s var(--ease-out);
+  animation: drop-in 0.8s var(--ease-out) both;
+}
+
+.polaroid img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 3px;
+  background: var(--panel);
+}
+
+.polaroid span {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.45rem;
+}
+
+.polaroid strong {
+  color: var(--blue);
+}
+
+.polaroid-0 {
+  left: 4%;
+  top: 30px;
+  --tilt: -7deg;
+}
+
+.polaroid-1 {
+  left: 36%;
+  top: 0;
+  --tilt: 4deg;
+  animation-delay: 0.12s;
+  z-index: 2;
+}
+
+.polaroid-2 {
+  left: 20%;
+  top: 190px;
+  --tilt: -2deg;
+  animation-delay: 0.24s;
+  z-index: 3;
+}
+
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.04);
+  z-index: 5;
+}
+
+.hero-dan {
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  animation: rise 0.8s 0.4s var(--ease-out) both;
+}
+
+.hero-dan svg {
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.5));
+  animation: bob 3.2s ease-in-out infinite;
+}
+
+.speech {
+  position: relative;
+  max-width: 190px;
+  margin: 0 0 0.6rem;
+  padding: 0.6rem 0.8rem;
+  background: #fff;
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.35;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.speech::after {
+  content: '';
+  position: absolute;
+  right: 48px;
+  bottom: -8px;
+  border: 8px solid transparent;
+  border-top-color: #fff;
+  border-bottom: 0;
+}
+
+.pennant-stripe {
+  height: 8px;
+  background: repeating-linear-gradient(90deg, var(--blue) 0 40px, #fff 40px 46px, var(--black) 46px 86px, #fff 86px 92px);
+}
+
+/* ---------- Category tiles & promo ---------- */
+.category-tile {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.category-tile small {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+}
+
+.category-tile::after {
+  content: '→';
+  position: absolute;
+  right: 1.1rem;
+  bottom: 1rem;
+  font-family: var(--font-body);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.category-tile:hover::after {
+  opacity: 1;
+  transform: none;
+}
+
+.promo {
+  flex-wrap: nowrap;
+  border: 1px solid #d6e3f2;
+}
+
+.promo > div {
+  flex: 1;
+}
+
+/* ---------- Product cards ---------- */
+.product-card {
+  animation: card-in 0.45s var(--ease-out) both;
+  border-radius: 14px;
+}
+
+.product-card-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card-image img {
+  transition: transform 0.45s var(--ease-out);
+}
+
+.product-card:hover .product-card-image img {
+  transform: scale(1.06);
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.badge.good {
+  background: #e7f4ec;
+  color: #1d6b3f;
+}
+
+.badge.warn {
+  background: #fff3d6;
+  color: #8a5a00;
+}
+
+.badge.bad {
+  background: #fde8e8;
+  color: #a12121;
+}
+
+.card-cta {
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translate(-50%, 12px);
+  opacity: 0;
+  background: var(--black);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  transition: opacity 0.2s, transform 0.25s var(--ease-out);
+  white-space: nowrap;
+}
+
+.product-card:hover .card-cta {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.card-top h3 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1.3;
+}
+
+.card-top .price {
+  font-size: 1.02rem;
+  white-space: nowrap;
+}
+
+.swatch-row {
+  display: flex;
+  gap: 4px;
+  margin-top: 0.45rem;
+}
+
+.swatch-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 0 0 1.5px #fff;
+}
+
+.size-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 0.6rem;
+}
+
+.pill {
+  font-size: 0.66rem;
+  font-weight: 700;
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+  background: var(--blue-light);
+  color: var(--blue);
+}
+
+.pill.out {
+  background: #f1f1f1;
+  color: #b3b3b3;
+  text-decoration: line-through;
+}
+
+/* ---------- Product page swatches ---------- */
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+
+.swatch-main {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.swatch {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.swatch.garment {
+  outline: 3px solid var(--blue-bright);
+  outline-offset: 3px;
+  transition: transform 0.2s var(--ease-out);
+}
+
+a.swatch-main:hover .swatch.garment {
+  transform: scale(1.08);
+}
+
+.swatch .check {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+}
+
+.swatch.small {
+  width: 22px;
+  height: 22px;
+}
+
+.swatch-label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.swatch-label strong {
+  text-transform: capitalize;
+}
+
+.swatch-label small {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.swatch-details {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.swatch-details small {
+  color: var(--muted);
+  text-transform: capitalize;
+}
+
+.detail-image {
+  border-radius: 18px;
+  background: radial-gradient(circle at 50% 35%, #fff 0%, var(--panel) 70%);
+}
+
+.detail-price {
+  font-family: var(--font-display);
+  font-size: 2rem;
+}
+
+/* ---------- Chat: Handsome Dan ---------- */
+.chat-panel {
+  transform-origin: bottom right;
+  animation: panel-in 0.28s var(--ease-out) both;
+  border-radius: 18px;
+}
+
+.chat-header .chat-identity {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.chat-avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--blue);
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--gold);
+  flex-shrink: 0;
+}
+
+.chat-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-title strong {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.chat-title small {
+  font-size: 0.72rem;
+}
+
+.online-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #3ecf6e;
+  margin-right: 2px;
+  vertical-align: 1px;
+}
+
+.chat-msg {
+  animation: msg-in 0.25s var(--ease-out) both;
+}
+
+.chat-msg.assistant {
+  display: grid;
+  grid-template-columns: 28px minmax(0, auto);
+  column-gap: 0.45rem;
+  align-items: start;
+  max-width: 92%;
+}
+
+.chat-msg.assistant > :not(.msg-avatar) {
+  grid-column: 2;
+}
+
+.chat-msg.assistant .msg-avatar {
+  grid-row: 1;
+}
+
+.chat-msg.assistant .chat-results-link {
+  justify-self: start;
+}
+
+.msg-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--blue);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.chat-msg.assistant .bubble.thinking {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bubble.thinking small {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.paws {
+  display: flex;
+  gap: 4px;
+}
+
+.paws span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--blue);
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+.paws span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.paws span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.chat-launcher {
+  width: 68px;
+  height: 68px;
+  background: var(--blue);
+  border: 3px solid var(--gold);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  overflow: hidden;
+  transition: transform 0.2s var(--ease-out);
+  animation: launcher-in 0.6s 0.6s var(--ease-out) both;
+}
+
+.chat-launcher:hover {
+  transform: scale(1.07) rotate(-4deg);
+  background: var(--blue-hover);
+}
+
+.chat-launcher.open {
+  background: var(--black);
+}
+
+.launcher-x {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.chat-hint {
+  font: inherit;
+  font-size: 0.85rem;
+  background: #fff;
+  color: var(--text);
+  border: none;
+  border-radius: 14px 14px 4px 14px;
+  padding: 0.55rem 0.85rem;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  animation: hint-in 0.5s 1.4s var(--ease-out) both;
+}
+
+.chat-hint strong {
+  color: var(--blue);
+}
+
+/* ---------- Footer ---------- */
+.footer-inner > div:first-child svg {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.footer-brand {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+}
+
+/* ---------- Motion ---------- */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(-24px) rotate(calc(var(--tilt, 0deg) * 2));
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--tilt, 0deg));
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(-2deg);
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes launcher-in {
+  0% {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes hint-in {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Respect shoppers who turn off motion in their OS settings. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 820px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    padding-top: 3rem;
+  }
+
+  .hero-collage {
+    height: 340px;
+  }
+
+  .polaroid {
+    width: 160px;
+  }
+
+  .hero-dan svg {
+    width: 96px;
+    height: 96px;
+  }
+
+  .promo {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .brand-text small {
+    display: none;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+  }
+
+  .nav-toggle {
+    margin-left: auto;
+  }
+
+  /* the launcher alone is enough on phones; the tooltip would cover page buttons */
+  .chat-hint {
+    display: none;
+  }
+}

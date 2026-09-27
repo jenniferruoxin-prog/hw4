@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Campus Customs: Live App Check</title>
+<style>
+  body { font-family: Inter, "Segoe UI", Arial, sans-serif; max-width: 1100px; margin: 0 auto; padding: 28px; color: #1d1d1d; background: #f4f6f9; }
+  header { background: #0a0a0a; color: #fff; padding: 22px 26px; border-radius: 12px; border-bottom: 5px solid #00366b; }
+  header h1 { margin: 0 0 6px; font-family: Georgia, serif; }
+  header p { margin: 0; color: #b9c9dc; line-height: 1.5; }
+  nav { margin: 16px 0 0; } nav a { color: #9bc4ee; margin-right: 16px; font-weight: 600; }
+  section { background: #fff; border-radius: 12px; padding: 22px 26px; margin: 22px 0; box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+  h2 { margin: 0 0 10px; color: #00366b; font-family: Georgia, serif; }
+  img { width: 100%; border: 1px solid #d5d9df; border-radius: 8px; margin: 10px 0 4px; }
+  .caption { font-size: .9rem; color: #555; margin: 0 0 14px; }
+  .proves { font-size: 1.05rem; line-height: 1.5; background: #e8f0f9; border-left: 5px solid #00366b; padding: 10px 14px; border-radius: 6px; }
+  .pass { background: #1d6b3f; color: #fff; border-radius: 999px; padding: 2px 10px; font-size: .8rem; font-weight: 700; vertical-align: middle; font-family: Arial, sans-serif; }
+  .fail { background: #a12121; color: #fff; border-radius: 999px; padding: 2px 10px; font-size: .8rem; font-weight: 700; vertical-align: middle; }
+  details { margin-top: 8px; color: #333; } summary { cursor: pointer; font-weight: 600; margin-bottom: 6px; }
+  table { border-collapse: collapse; width: 100%; } th, td { padding: 6px 10px; text-align: left; vertical-align: top; }
+  th { width: 150px; color: #00366b; } tr:nth-child(even) { background: #f4f6f9; }
+  code { background: #eef1f5; padding: 1px 5px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Campus Customs: Live App Check (Problem 11)</h1>
+  <p>Tested on the running site (React + Vite at <code>localhost:5173</code>, FastAPI at <code>localhost:8000</code>, PydanticAI agent on <code>gpt-5.6-luna</code>)
+  in Microsoft Edge, driven by Playwright, on 2026-09-27 11:59. Every value below was checked against <code>data/campus_customs.db</code> during the same test run.</p>
+  <nav><a href="#inventory">1. Inventory check</a><a href="#cards">2. Search-result cards</a><a href="#usability">3. Usability feature</a></nav>
+</header>
+
+<section id="inventory">
+  <h2>1. Chat checks the inventory level of an item <span class="pass">PASS</span></h2>
+  <img src="app_check_images/inventory.png" alt="Chat answering a stock and price question on the Boola Boola T Shirt page">
+  <p class="caption">Boola Boola T Shirt product page with the Handsome Dan chat open.</p>
+  <p class="proves">Asked about XL, L and the price, the chat answers with the database's real numbers: <strong>$32.00</strong>, the exact XL count, and a clear "sold out" for L. The stock and price shown are honest, not invented.</p>
+  <details open><summary>Question, answer and database values</summary>
+  <table>
+    <tr><th>Shopper asked</th><td>How many are left in XL, is it available in L, and what&#x27;s the price?</td></tr>
+    <tr><th>Chat answered</th><td>The Boola Boola T Shirt is sold out in L. There are only 2 left in XL, and it’s $32.00.</td></tr>
+    <tr><th>Database says</th><td>Boola Boola T Shirt: price $32.00; stock XS 12, S 12, M 15, L 0, XL 2, XXL 20</td></tr>
+  </table></details>
+</section>
+
+<section id="cards">
+  <h2>2. Search-result cards appear after a category question <span class="pass">PASS</span></h2>
+  <img src="app_check_images/search_cards.png" alt="Hoodie search results shown as product cards on the page">
+  <p class="caption">Home page right after asking "What hoodies do you have?".</p>
+  <p class="proves">The agent's search results show up <strong>on the website</strong> as product cards (photo, name, price, colors, sizes) in a "From your chat" section. There are 27 items, the same as the 27 hoodies in the catalogue. The number in the chat's reply matches, and every card price matches the database. Before the question, the section wasn't there.</p>
+  <img src="app_check_images/search_card_detail.png" alt="Product detail page opened by clicking a chat result card">
+  <p class="caption">After clicking the first card the chat added ("Basic Hoodie Big Yale").</p>
+  <p class="proves">A card placed by the chat still opens the Problem 3 single-item page: large image on one side, and description, price and stock for all 6 sizes on the other.</p>
+  <details><summary>Details</summary>
+  <table>
+    <tr><th>Chat answered</th><td>I found 27 hoodies, including classic Yale styles, full-zips, team hoodies, and family gifts. Highlights include the Ua Gameday Double Knit Hood at $45.00, plus the Basic Hoodie Big Yale and Yale Dad Hoodie at $68.00. They’re all on the page—Boola boola!</td></tr>
+    <tr><th>Count in reply</th><td>Chat said [27] and the page shows 27 cards: True</td></tr>
+    <tr><th>Section heading</th><td>Yale Hoodies · 27 items. The first 8 are shown, and "Show all" reveals the rest.</td></tr>
+    <tr><th>Database</th><td>27 hoodies in <code>catalogue</code>. All card prices match <code>catalogue.price</code>: True</td></tr>
+    <tr><th>Card click</th><td>Opened <code>/products/basic-hoodie-big-yale</code> (detail page with 6 sizes: True)</td></tr>
+  </table></details>
+</section>
+
+<section id="usability">
+  <h2>3. Problem 9 usability feature: sort &amp; filters <span class="pass">PASS</span></h2>
+  <img src="app_check_images/usability_filters.png" alt="Products page sorted by price and filtered by price range, color and size in stock">
+  <p class="caption">Products page with Sort = Price: low to high, Price = $40–$60, Color = Navy, Size in stock = M.</p>
+  <p class="proves">The Problem 9 toolbar narrows 102 products to <strong>10</strong>, sorted from cheapest. That's exactly the 10 navy $40–$60 products that have size M in stock according to a direct database query.</p>
+  <details><summary>Details</summary>
+  <table>
+    <tr><th>Shareable URL</th><td><code>/products?sort=price_low&amp;price=40to60&amp;color=Navy&amp;size=M</code></td></tr>
+    <tr><th>Page shows</th><td>10 products in stock in M, prices $45.00–$58.00, ascending: True</td></tr>
+    <tr><th>Database</th><td>10 matching products (same names as the page)</td></tr>
+  </table></details>
+</section>
+</body>
+</html>

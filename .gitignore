@@ -1,0 +1,30 @@
+# Secrets: never commit the real key file (only .env.example)
+.env
+.env.*
+!.env.example
+
+# Course data pack: database and product photos stay local (see README "Place the data pack")
+data/*
+!data/README.md
+data.zip
+*.db
+*.db-journal
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Node / build output
+node_modules/
+dist/
+
+# Runtime logs and temp files
+*.log
+*.tmp
+output/usage_log.jsonl
+output/audit_trail.corrupt-*.json
+
+# Local tools and scratch files
+.claude/
+joke.txt
