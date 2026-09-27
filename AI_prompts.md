@@ -153,3 +153,11 @@ This log records the prompts I typed to my AI coding assistant while completing 
 > ·Tools and abilities
 > ·Safety rules
 > ·Specs (loop limits, result caps, models, how to run front + back)
+
+## Problem 13 — Public GitHub repo (hw4)
+
+### Prompt typed
+
+> Now we work on problem 13. Put our code in a folder named hw4 and push it to a public GitHub repository. I need the repo URL that I will submit by myself to some other places. DO NOT put my real .env, campus_customs.db, or product images in the GitHub repo.Use .gitignore. Include .env.example with placeholders only.
+> Expected file layout can be found in the picture The agent itself is four files under backend/ : prompts/prompt.md, agent.py, tools.py and models.py. README.md should explain how to run the front end and back end after placing the data pack.
+
